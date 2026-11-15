@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note, NoteFormValues } from "@/type/note";
+import type { Note, NoteFormValues } from "@/types/note";
 
 // функція get-запиту
 // інтерфейс відповіді get-запиту, який включає описаний інтерфейс Note
