@@ -2,6 +2,7 @@ import css from "./NoteList.module.css";
 import type { Note } from "@/type/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteNote } from "@/lib/api";
+import Link from "next/link";
 
 // пропс, у який буде передаватись масив для рендеру
 interface NoteListProps {
@@ -32,6 +33,7 @@ export default function NoteList({ notes }: NoteListProps) {
           <p className={css.content}>{content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{tag}</span>
+            <Link href={`/notes/${id}`}>View details</Link>
             <button
               className={css.button}
               onClick={() => deleteNoteMutation(id)}

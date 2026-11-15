@@ -54,3 +54,17 @@ export async function deleteNote(id: string): Promise<Note> {
   const { data } = await axios.request<Note>(options);
   return data;
 }
+// функція запиту на одну нотатку
+export async function fetchNoteById(id: string): Promise<Note> {
+  const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+  const options = {
+    method: "GET",
+    url: `https://notehub-public.goit.study/api/notes/${id}`,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${myKey}`,
+    },
+  };
+  const response = await axios.request<Note>(options);
+  return response.data;
+}
