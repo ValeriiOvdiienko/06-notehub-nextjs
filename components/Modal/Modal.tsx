@@ -2,17 +2,20 @@
 import css from "./Modal.module.css";
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 //
 interface ModalProps {
-  onClose: () => void;
   children: React.ReactNode;
 }
 //
-export default function Modal({ onClose, children }: ModalProps) {
+export default function Modal({ children }: ModalProps) {
+  // закриття через роутер
+  const router = useRouter();
+  const close = () => router.back();
   // ефекти для закриття по кліку на бекдроп чи ескейп
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      onClose();
+      close();
     }
   };
 
@@ -23,7 +26,7 @@ export default function Modal({ onClose, children }: ModalProps) {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
+        close();
       }
     };
 
@@ -33,7 +36,7 @@ export default function Modal({ onClose, children }: ModalProps) {
       document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose]);
+  }, [close]);
   //
   return createPortal(
     <div

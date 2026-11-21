@@ -11,12 +11,18 @@ interface FetchNotehubResponse {
 export async function fetchNotes(
   query: string,
   page: number,
+  tag?: string,
 ): Promise<FetchNotehubResponse> {
   const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
   const options = {
     method: "GET",
-    url: `https://notehub-public.goit.study/api/notes?search=${query}&page=${page}&perPage=12`,
+    url: `https://notehub-public.goit.study/api/notes`,
+    params: {
+      search: query || undefined,
+      tag: tag || undefined,
+      page,
+      perPage: 12,
+    },
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${myKey}`,

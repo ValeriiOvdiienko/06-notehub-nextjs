@@ -13,7 +13,10 @@ import { useState } from "react";
 // імпорт дебаунсу
 import { useDebouncedCallback } from "use-debounce";
 
-export function NotesClient() {
+interface NotesClientProps {
+  tag?: string;
+}
+export function NotesClient({ tag }: NotesClientProps) {
   // useState для запита по пошуку
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -30,9 +33,9 @@ export function NotesClient() {
   //
   // запити на бекенд
   const { data, isError } = useQuery({
-    queryKey: ["notes", currentPage, searchQuery],
+    queryKey: ["notes", currentPage, searchQuery, tag],
     queryFn: async () => {
-      const response = await fetchNotes(searchQuery, currentPage);
+      const response = await fetchNotes(searchQuery, currentPage, tag);
       if (!response) throw new Error("some error");
       return response;
     },
@@ -69,7 +72,7 @@ export function NotesClient() {
             Create note +
           </button>
           {isModalOpen && (
-            <Modal onClose={closeModal}>
+            <Modal>
               <NoteForm onCancel={closeModal} />
             </Modal>
           )}
